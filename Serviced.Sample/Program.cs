@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Serviced.Sample.ImplementationFactory;
 using System;
-using Test;
 
 namespace Serviced.Sample
 {
@@ -17,7 +16,7 @@ namespace Serviced.Sample
 
             var petService = serviceProvider.GetService<IPetService>();
 
-            var houseService = serviceProvider .GetService<HouseService>();
+            var houseService = serviceProvider.GetService<HouseService>();
 
             petService.Log();
             houseService.Log();
