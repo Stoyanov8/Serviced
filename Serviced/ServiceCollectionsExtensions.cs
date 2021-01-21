@@ -26,7 +26,7 @@
 
                 if (typeof(IHasImplementationFactory).IsAssignableFrom(serviceToRegister))
                 {
-                    RegisterWithImplementationFactory(services, serviceToRegister, lifetime);
+                    RegisterWithImplementationFactory(services, implementationType, lifetime);
                 }
                 else
                 {
@@ -50,12 +50,12 @@
             services.Add(descriptor);
         }
 
-        private static void RegisterWithImplementationFactory(IServiceCollection services, Type serviceToRegister, ServiceLifetime lifetime)
+        private static void RegisterWithImplementationFactory(IServiceCollection services, Type implementationType, ServiceLifetime lifetime)
         {
-            var classInstance = Activator.CreateInstance(serviceToRegister);
-            var factory = (Func<IServiceProvider, object>)serviceToRegister.GetMethod(nameof(IHasImplementationFactory.GetFactory)).Invoke(classInstance, null);
-            var descriptor = new ServiceDescriptor(serviceToRegister, factory, lifetime);
-
+            var classInstance = Activator.CreateInstance(implementationType);
+            var factory = (Func<IServiceProvider, object>)implementationType.GetMethod(nameof(IHasImplementationFactory.GetFactory)).Invoke(classInstance, null);
+            var descriptor = new ServiceDescriptor(implementationType, factory, lifetime);
+             
             services.Add(descriptor);
         }
 
@@ -68,7 +68,9 @@
                 .GetInterfaces()
                 .FirstOrDefault(x => x.IsGenericType && typeof(IServiced).IsAssignableFrom(x));
 
-            return (genericInterface != null ? genericInterface.GetGenericArguments()[0] : null, serviceToRegister);
+            return (genericInterface != null
+                ? genericInterface.GetGenericArguments()[0]
+                : serviceToRegister, serviceToRegister);
         }
 
         private static ServiceLifetime GetLifetime(Type serviceToRegister)
