@@ -9,13 +9,13 @@
     public static class ServiceCollectionsExtensions
     {
         #region Extensions
-        public static IServiceCollection AddServiced(this IServiceCollection services, IEnumerable<Assembly> assemblies)
+        public static IServiceCollection AddServiced(this IServiceCollection services, params Assembly[] assemblies)
         {
-            assemblies = FilterAssemblies(assemblies);
+           var compatibleAssemblies = FilterAssemblies(assemblies);
 
-            var servicesToRegister = assemblies
+            var servicesToRegister = compatibleAssemblies
                 .SelectMany(x => x.GetTypes())
-                .Where(t => (typeof(IServiced).IsAssignableFrom(t)))
+                .Where(t => typeof(IServiced).IsAssignableFrom(t))
                 .ToList();
 
             foreach (var serviceToRegister in servicesToRegister)
@@ -35,11 +35,7 @@
             }
 
             return services;
-        }
-
-        public static IServiceCollection AddServiced(this IServiceCollection services, Assembly assembly)
-            => AddServiced(services, new List<Assembly> { assembly });
-
+        }          
         #endregion
 
         #region Registration
@@ -89,7 +85,7 @@
             return lifetime;
         }
 
-        private static IEnumerable<Assembly> FilterAssemblies(IEnumerable<Assembly> assemblies)
+        private static IEnumerable<Assembly> FilterAssemblies(params Assembly[] assemblies)
         {
             var currentAssembly = Assembly.GetAssembly(typeof(IServiced));
 
