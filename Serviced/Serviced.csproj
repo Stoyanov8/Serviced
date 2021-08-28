@@ -6,11 +6,13 @@
     <Company />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Serviced is a simple lightweight library that handles service registrations for you.</Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 
     <RepositoryUrl>https://github.com/Stoyanov8/Serviced</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/Stoyanov8/Serviced</PackageProjectUrl>
+    <PackageIcon>S.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,4 +22,11 @@
    <ItemGroup>
      <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
+ 
+   <ItemGroup>
+     <None Update="S.png">
+       <Pack>True</Pack>
+       <PackagePath></PackagePath>
+     </None>
+   </ItemGroup>
 </Project>
