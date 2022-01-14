@@ -7,12 +7,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Serviced is a simple lightweight library that handles service registrations for you.</Description>
     <Version>1.0.4</Version>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseFile>C:\Projects\My Projects\Serviced\LICENSE</PackageLicenseFile>
 
     <RepositoryUrl>https://github.com/Stoyanov8/Serviced</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/Stoyanov8/Serviced</PackageProjectUrl>
-    <PackageIcon>S.png</PackageIcon>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,13 +21,14 @@
   </ItemGroup>
  
    <ItemGroup>
-     <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-  </ItemGroup>
- 
-   <ItemGroup>
-     <None Update="S.png">
+     <None Include="..\..\logo.png">
        <Pack>True</Pack>
        <PackagePath></PackagePath>
      </None>
-   </ItemGroup>
+     <None Include="..\..\README.md">
+       <Pack>True</Pack>
+       <PackagePath></PackagePath>
+     </None>
+     <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
 </Project>
