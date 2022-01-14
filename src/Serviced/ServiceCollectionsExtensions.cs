@@ -9,9 +9,15 @@
     public static class ServiceCollectionsExtensions
     {
         #region Extensions
+        /// <summary>
+        /// Registers all items for given assemblies
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="assemblies"></param>
+        /// <returns></returns>
         public static IServiceCollection AddServiced(this IServiceCollection services, params Assembly[] assemblies)
         {
-           var compatibleAssemblies = FilterAssemblies(assemblies);
+            var compatibleAssemblies = FilterAssemblies(assemblies);
 
             var servicesToRegister = compatibleAssemblies
                 .SelectMany(x => x.GetTypes())
@@ -35,7 +41,20 @@
             }
 
             return services;
-        }          
+        }
+
+        /// <summary>
+        /// Registers all items for calling assembly
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="assemblies"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddServicedForCallingAssembly(this IServiceCollection services)
+        {
+            var callingAssembly = Assembly.GetCallingAssembly();
+
+            return AddServiced(services, callingAssembly);
+        }
         #endregion
 
         #region Registration
@@ -51,7 +70,7 @@
             var classInstance = Activator.CreateInstance(implementationType);
             var factory = (Func<IServiceProvider, object>)implementationType.GetMethod(nameof(IHasImplementationFactory.GetFactory)).Invoke(classInstance, null);
             var descriptor = new ServiceDescriptor(implementationType, factory, lifetime);
-             
+
             services.Add(descriptor);
         }
 
@@ -89,8 +108,7 @@
         {
             var currentAssembly = Assembly.GetAssembly(typeof(IServiced));
 
-            return assemblies
-                .Where(x => x.FullName != currentAssembly.FullName);
+            return assemblies.Where(x => x.FullName != currentAssembly.FullName);
         }
 
         #endregion Helpers

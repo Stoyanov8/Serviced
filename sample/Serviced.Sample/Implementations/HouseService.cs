@@ -1,8 +1,8 @@
-﻿namespace Serviced.Sample.ImplementationFactory
+﻿namespace Serviced.Sample.Implementations
 {
     using System;
 
-    public class HouseService : ISingleton<IHouseService>, IHouseService, IHasImplementationFactory
+    public class HouseService : ISingleton, IHasImplementationFactory
     {
         private readonly string _message;
 
@@ -22,7 +22,7 @@
 
         public Func<IServiceProvider, object> GetFactory()
         {
-            return x => new HouseService("Registered with implementation factory");
+            return x => new HouseService(nameof(HouseService) + " has been registered with implementation factory.");
         }
     }
 }

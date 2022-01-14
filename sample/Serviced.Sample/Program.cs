@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Serviced.Sample.ImplementationFactory;
-using System;
-
-namespace Serviced.Sample
+﻿namespace Serviced.Sample
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using Serviced.Sample.Implementations;
+    using Serviced.Sample.Interfaces;
+
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var services = new ServiceCollection();
-
             var serviceProvider = services
-                  .AddServiced(AppDomain.CurrentDomain.GetAssemblies())
+                  .AddServicedForCallingAssembly()
                   .BuildServiceProvider();
 
             var petService = serviceProvider.GetService<IPetService>();
